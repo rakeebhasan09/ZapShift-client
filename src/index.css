@@ -1,0 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
+
+@import "tailwindcss";
+@plugin "daisyui";
+
+body {
+	font-family: "Urbanist", sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	color: #606060;
+}
+
+.container {
+	margin: 0 auto;
+	padding: 0 15px;
+}
+
+.footer-menu-border {
+	@apply border-t border-dashed border-t-[#03464D] border-b border-b-[#03464D];
+}
