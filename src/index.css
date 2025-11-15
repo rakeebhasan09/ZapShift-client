@@ -7,7 +7,10 @@ body {
 	font-family: "Urbanist", sans-serif;
 	font-size: 16px;
 	font-weight: 400;
+	background: #eaeced;
 	color: #606060;
+	padding-top: 28px;
+	padding-bottom: 48px;
 }
 
 .container {

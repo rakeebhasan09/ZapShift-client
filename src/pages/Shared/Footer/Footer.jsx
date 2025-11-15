@@ -9,7 +9,7 @@ const Footer = () => {
 	return (
 		<footer>
 			<div className="container">
-				<div className="bg-[#0B0B0B] flex flex-col gap-8 md:py-16 md:px-12 lg:px-20 lg:py-20 xl:px-[109px] rounded-4xl">
+				<div className="bg-[#0B0B0B] flex flex-col gap-8 py-10 px-5 md:py-16 md:px-12 lg:px-20 lg:py-20 xl:px-[109px] rounded-xl lg:rounded-4xl">
 					{/* Footer Top */}
 					<div className="max-w-[810px] mx-auto flex flex-col gap-4 items-center">
 						<img src={footerLogo} alt="" />
@@ -21,7 +21,7 @@ const Footer = () => {
 					</div>
 					{/* Footer Menu */}
 					<div>
-						<ul className="flex flex-wrap justify-center md:gap-5 lg:gap-6 xl:gap-9 md:py-5 xl:py-8 footer-menu-border">
+						<ul className="flex flex-wrap justify-center gap-5 lg:gap-6 xl:gap-9 py-4 md:py-5 xl:py-8 footer-menu-border">
 							<li>
 								<Link className="text-[#DADADA] font-medium">
 									Services
@@ -56,7 +56,7 @@ const Footer = () => {
 					</div>
 					{/* Socila Icons */}
 					<div>
-						<ul className="flex items-center justify-center md:gap-5 lg:gap-6">
+						<ul className="flex items-center justify-center gap-5 lg:gap-6">
 							<li>
 								<Link>
 									<img src={linkedin} alt="linkedin Icon" />
