@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 const WorkCard = ({ title, description, icon: Icon }) => {
 	return (
 		<div className="bg-[rgba(255,255,255,0.70)] rounded-xl md:rounded-2xl lg:rounded-3xl p-5 md:p-6 lg:p-8">
