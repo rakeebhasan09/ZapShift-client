@@ -30,3 +30,7 @@ body {
 .footer-menu-border {
 	@apply border-t border-dashed border-t-[#03464D] border-b border-b-[#03464D];
 }
+
+.carousel .carousel-status {
+	display: none;
+}
