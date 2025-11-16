@@ -4,7 +4,7 @@ const Services = () => {
 	return (
 		<section>
 			<div className="container">
-				<div className="py-10 px-10 md:py-20 md:px-20 lg:py-[100px] lg:px-[110px] rounded-2xl md:rounded-3xl lg:rounded-4xl bg-secondary">
+				<div className="py-10 px-5 md:py-20 md:px-20 lg:py-[100px] lg:px-[110px] rounded-2xl md:rounded-3xl lg:rounded-4xl bg-secondary">
 					{/* Title Card */}
 					<div className="max-w-[718px] mx-auto">
 						<h2 className="text-white text-[40px] font-extrabold text-center mb-4">
