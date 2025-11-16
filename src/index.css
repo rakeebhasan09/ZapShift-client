@@ -34,3 +34,7 @@ body {
 .carousel .carousel-status {
 	display: none;
 }
+
+.menu.menu-horizontal li a.active {
+	background: #caeb66;
+}

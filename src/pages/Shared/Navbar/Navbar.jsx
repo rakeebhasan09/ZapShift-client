@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 import navLogo from "../../../assets/Nav-logo.png";
 import { MdOutlineArrowOutward } from "react-icons/md";
 
@@ -6,32 +6,52 @@ const Navbar = () => {
 	const links = (
 		<>
 			<li>
-				<Link className="font-medium hover:bg-transparent">
+				<NavLink
+					to="/services"
+					className="font-medium hover:bg-transparent text-[#5B6A2E]"
+				>
 					Services
-				</Link>
+				</NavLink>
 			</li>
 			<li>
-				<Link className="font-medium hover:bg-transparent">
+				<NavLink
+					to="/coverage"
+					className="font-medium hover:bg-transparent text-[#5B6A2E]"
+				>
 					Coverage
-				</Link>
+				</NavLink>
 			</li>
 			<li>
-				<Link className="font-medium hover:bg-transparent">
+				<NavLink
+					to="/about-us"
+					className="font-medium hover:bg-transparent text-[#5B6A2E]"
+				>
 					About Us
-				</Link>
+				</NavLink>
 			</li>
 			<li>
-				<Link className="font-medium hover:bg-transparent">
+				<NavLink
+					to="/pricing"
+					className="font-medium hover:bg-transparent text-[#5B6A2E]"
+				>
 					Pricing
-				</Link>
+				</NavLink>
 			</li>
 			<li>
-				<Link className="font-medium hover:bg-transparent">Blog</Link>
+				<NavLink
+					to="/blog"
+					className="font-medium hover:bg-transparent text-[#5B6A2E]"
+				>
+					Blog
+				</NavLink>
 			</li>
 			<li>
-				<Link className="font-medium hover:bg-transparent">
+				<NavLink
+					to="/contact"
+					className="font-medium hover:bg-transparent text-[#5B6A2E]"
+				>
 					Contact
-				</Link>
+				</NavLink>
 			</li>
 		</>
 	);
