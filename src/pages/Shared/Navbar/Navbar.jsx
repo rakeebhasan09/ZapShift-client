@@ -1,10 +1,47 @@
+import { Link } from "react-router";
+import navLogo from "../../../assets/Nav-logo.png";
+import { MdOutlineArrowOutward } from "react-icons/md";
+
 const Navbar = () => {
+	const links = (
+		<>
+			<li>
+				<Link className="font-medium hover:bg-transparent">
+					Services
+				</Link>
+			</li>
+			<li>
+				<Link className="font-medium hover:bg-transparent">
+					Coverage
+				</Link>
+			</li>
+			<li>
+				<Link className="font-medium hover:bg-transparent">
+					About Us
+				</Link>
+			</li>
+			<li>
+				<Link className="font-medium hover:bg-transparent">
+					Pricing
+				</Link>
+			</li>
+			<li>
+				<Link className="font-medium hover:bg-transparent">Blog</Link>
+			</li>
+			<li>
+				<Link className="font-medium hover:bg-transparent">
+					Contact
+				</Link>
+			</li>
+		</>
+	);
 	return (
 		<div className="container">
-			<div className="navbar rounded-2xl bg-white py-5 px-8">
+			<div className="navbar rounded-2xl bg-white py-3 lg:py-5 px-4 lg:px-8">
+				{/* Navbar Start */}
 				<div className="navbar-start">
-					<div className="dropdown">
-						<div tabIndex={0} role="button" className="lg:hidden">
+					<div className="dropdown mr-2">
+						<div tabIndex={0} role="button" className="xl:hidden">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								className="h-10 w-10"
@@ -24,28 +61,34 @@ const Navbar = () => {
 							tabIndex="-1"
 							className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
 						>
-							<li>
-								<a>Item 1</a>
-							</li>
-							<li>
-								<a>Item 2</a>
-							</li>
+							{links}
 						</ul>
 					</div>
-					<a className="btn btn-ghost text-xl">daisyUI</a>
+					<Link to="/">
+						<img src={navLogo} alt="" />
+					</Link>
 				</div>
-				<div className="navbar-center hidden lg:flex">
-					<ul className="menu menu-horizontal px-1">
-						<li>
-							<a>Item 1</a>
-						</li>
-						<li>
-							<a>Item 2</a>
-						</li>
+				{/* Menu Area */}
+				<div className="navbar-center hidden xl:flex">
+					<ul className="menu menu-horizontal xl:gap-1 2xl:gap-9 p-0">
+						{links}
 					</ul>
 				</div>
+				{/* Buttons Area */}
 				<div className="navbar-end">
-					<a className="btn">Button</a>
+					<div className="flex items-center lg:gap-2 2xl:gap-4">
+						<Link className="py-2 lg:py-4 px-4 lg:px-8 border border-[#DADADA] rounded-xl text-[20px] font-bold">
+							Sign In
+						</Link>
+						<div className="hidden lg:flex items-center">
+							<Link className="py-4 px-8 border border-[#CAEB66] bg-primary rounded-xl text-[20px] text-[#1F1F1F] font-bold">
+								Sign Up
+							</Link>
+							<Link className="w-14 h-14 rounded-full bg-[#1F1F1F] flex items-center justify-center">
+								<MdOutlineArrowOutward className="text-[#CAEB66] text-[32px]" />
+							</Link>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
