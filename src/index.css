@@ -42,3 +42,22 @@ body {
 button {
 	cursor: pointer;
 }
+
+.react-tabs__tab-list {
+	border-bottom: 0 !important;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 30px;
+	margin-bottom: 50px !important;
+}
+
+.react-tabs__tab {
+	border: 0 !important;
+	padding: 0 !important;
+}
+
+.react-tabs__tab.react-tabs__tab--selected {
+	color: #5b6a2e;
+	font-weight: 800;
+}
