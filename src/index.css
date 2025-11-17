@@ -1,8 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
 
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
 @import "tailwindcss";
 @plugin "daisyui" {
 	themes: light --default;
+}
+
+/* :root {
+	--font-inter: "Inter", sans-serif;
+} */
+
+.inter {
+	font-family: "Inter", sans-serif;
 }
 
 @plugin "daisyui/theme" {
@@ -10,6 +20,9 @@
 	default: true;
 	--color-primary: #caeb66;
 	--color-secondary: #03373d;
+	--color-muted: #71717a;
+
+	/* --font-inter: "Inter", sans-serif; */
 }
 
 body {
@@ -18,8 +31,6 @@ body {
 	font-weight: 400;
 	background: #eaeced;
 	color: #606060;
-	padding-top: 28px;
-	padding-bottom: 48px;
 }
 
 .container {
