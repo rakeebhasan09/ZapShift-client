@@ -38,3 +38,7 @@ body {
 .menu.menu-horizontal li a.active {
 	background: #caeb66;
 }
+
+button {
+	cursor: pointer;
+}
