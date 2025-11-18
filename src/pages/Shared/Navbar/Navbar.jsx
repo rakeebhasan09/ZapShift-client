@@ -1,8 +1,20 @@
 import { Link, NavLink } from "react-router";
 import navLogo from "../../../assets/Nav-logo.png";
 import { MdOutlineArrowOutward } from "react-icons/md";
+import useAuth from "../../../hooks/useAuth";
 
 const Navbar = () => {
+	const { user, logOut } = useAuth();
+	const handleLogout = () => {
+		logOut()
+			.then(() => {
+				console.log("Logout Successfull.");
+			})
+			.then((error) => {
+				console.log(error);
+			});
+	};
+
 	const links = (
 		<>
 			<li>
@@ -96,22 +108,59 @@ const Navbar = () => {
 				</div>
 				{/* Buttons Area */}
 				<div className="navbar-end">
-					<div className="flex items-center lg:gap-2 2xl:gap-4">
-						<Link
-							to="/login"
-							className="py-2 lg:py-4 px-4 lg:px-8 border border-[#DADADA] rounded-xl text-[20px] font-bold"
-						>
-							Sign In
-						</Link>
-						<div className="hidden lg:flex items-center">
-							<Link className="py-4 px-8 border border-[#CAEB66] bg-primary rounded-xl text-[20px] text-[#1F1F1F] font-bold">
-								Sign Up
-							</Link>
-							<Link className="w-14 h-14 rounded-full bg-[#1F1F1F] flex items-center justify-center">
-								<MdOutlineArrowOutward className="text-[#CAEB66] text-[32px]" />
-							</Link>
+					{user ? (
+						<div className="dropdown dropdown-end w-[45px] h-[45px]">
+							<div
+								tabIndex={0}
+								role="button"
+								className="btn btn-ghost btn-circle avatar w-[45px] h-[45px]"
+							>
+								<div className="w-[45px] h-[45px] rounded-full">
+									<img
+										className="rounded-full"
+										alt={user.displayName}
+										src={user.photoURL}
+									/>
+								</div>
+							</div>
+							<ul
+								tabIndex="-1"
+								className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 p-2 shadow"
+							>
+								<li>
+									<a>{user.displayName}</a>
+								</li>
+								<li>
+									<a>{user.email}</a>
+								</li>
+								<li>
+									<button onClick={handleLogout}>
+										Logout
+									</button>
+								</li>
+							</ul>
 						</div>
-					</div>
+					) : (
+						<div className="flex items-center lg:gap-2 2xl:gap-4">
+							<Link
+								to="/login"
+								className="py-2 lg:py-4 px-4 lg:px-8 border border-[#DADADA] rounded-xl text-[20px] font-bold"
+							>
+								Sign In
+							</Link>
+							<div className="hidden lg:flex items-center">
+								<Link
+									to="/be-a-rider"
+									className="py-4 px-8 border border-[#CAEB66] bg-primary rounded-xl text-[20px] text-[#1F1F1F] font-bold"
+								>
+									Be a rider
+								</Link>
+								<Link className="w-14 h-14 rounded-full bg-[#1F1F1F] flex items-center justify-center">
+									<MdOutlineArrowOutward className="text-[#CAEB66] text-[32px]" />
+								</Link>
+							</div>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

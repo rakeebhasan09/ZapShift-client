@@ -1,7 +1,24 @@
 import { Link } from "react-router";
 import Google from "../../Shared/Social/Google";
+import { useForm } from "react-hook-form";
+import useAuth from "../../../hooks/useAuth";
 
 const Login = () => {
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm();
+	const { signInUser } = useAuth();
+	const handleLogin = (data) => {
+		signInUser(data.email, data.password)
+			.then((result) => {
+				console.log(result.user);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
 	return (
 		<div className="max-w-[384px] mx-auto inter">
 			<h2 className="text-black text-[28px] md:text-[42px] font-extrabold">
@@ -9,17 +26,24 @@ const Login = () => {
 			</h2>
 			<p className="text-black">Login with ZapShift</p>
 			{/* Form */}
-			<form className="mt-5 flex flex-col gap-3">
+			<form
+				onSubmit={handleSubmit(handleLogin)}
+				className="mt-5 flex flex-col gap-3"
+			>
 				{/* Single Input */}
 				<div>
 					<label className="text-[#0F172A] font-medium mb-1.5 block">
 						Email
 					</label>
 					<input
-						type="text"
+						type="email"
 						placeholder="Email"
+						{...register("email", { required: true })}
 						className="py-2 px-3 bg-white border border-[#CBD5E1] rounded-md outline-none w-full text-[#0F172A]"
 					/>
+					{errors.email?.type === "required" && (
+						<p className="text-red-500">Email is required</p>
+					)}
 				</div>
 				{/* Single Input */}
 				<div>
@@ -27,10 +51,14 @@ const Login = () => {
 						Password
 					</label>
 					<input
-						type="text"
+						type="password"
+						{...register("password", { required: true })}
 						placeholder="Password"
 						className="py-2 px-3 bg-white border border-[#CBD5E1] rounded-md outline-none w-full text-[#0F172A]"
 					/>
+					{errors.password?.type === "required" && (
+						<p className="text-red-500">Password is required</p>
+					)}
 				</div>
 				{/* Reset Password */}
 				<div>
@@ -48,7 +76,9 @@ const Login = () => {
 				<div>
 					<p className="text-[#71717A]">
 						Don’t have any account?{" "}
-						<Link className="text-primary">Register</Link>
+						<Link to="/registration" className="text-primary">
+							Register
+						</Link>
 					</p>
 				</div>
 			</form>

@@ -1,7 +1,20 @@
+import useAuth from "../../../hooks/useAuth";
+
 const Google = () => {
+	const { googleLogin } = useAuth();
+	const handleGoogleLogin = () => {
+		googleLogin()
+			.then((result) => {
+				console.log("Google logged in user", result.user);
+			})
+			.then((error) => {
+				console.log(error);
+			});
+	};
 	return (
 		<div>
 			<button
+				onClick={handleGoogleLogin}
 				type="button"
 				className="btn bg-[#E9ECF1] py-2 text-black font-medium border-[#e5e5e5] w-full"
 			>

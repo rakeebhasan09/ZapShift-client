@@ -1,8 +1,10 @@
 import { Link } from "react-router";
 import Google from "../../Shared/Social/Google";
 import { useForm } from "react-hook-form";
+import useAuth from "../../../hooks/useAuth";
 
 const Register = () => {
+	const { userRegistration } = useAuth();
 	const {
 		register,
 		handleSubmit,
@@ -10,7 +12,14 @@ const Register = () => {
 	} = useForm();
 
 	const handleRegistration = (data) => {
-		console.log(data);
+		console.log(data.photo[0]);
+		// userRegistration(data.email, data.password)
+		// 	.then((result) => {
+		// 		console.log(result.user);
+		// 	})
+		// 	.catch((error) => {
+		// 		console.log(error);
+		// 	});
 	};
 	return (
 		<div className="max-w-[384px] mx-auto inter">
@@ -23,6 +32,21 @@ const Register = () => {
 				onSubmit={handleSubmit(handleRegistration)}
 				className="mt-5 flex flex-col gap-3"
 			>
+				{/* Single Input */}
+				<div>
+					<label className="text-[#0F172A] font-medium mb-1.5 block">
+						Photo
+					</label>
+					<input
+						type="file"
+						{...register("photo", { required: true })}
+						className="file-input bg-white border border-[#CBD5E1] rounded-md outline-none w-full text-[#0F172A]"
+					/>
+					{errors.name?.type === "required" && (
+						<p className="text-red-500">Photo is required</p>
+					)}
+				</div>
+
 				{/* Single Input */}
 				<div>
 					<label className="text-[#0F172A] font-medium mb-1.5 block">
@@ -97,7 +121,9 @@ const Register = () => {
 				<div>
 					<p className="text-[#71717A]">
 						Already have an account?{" "}
-						<Link className="text-primary">Login</Link>
+						<Link to="/login" className="text-primary">
+							Login
+						</Link>
 					</p>
 				</div>
 			</form>
