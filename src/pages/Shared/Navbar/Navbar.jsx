@@ -97,7 +97,10 @@ const Navbar = () => {
 				{/* Buttons Area */}
 				<div className="navbar-end">
 					<div className="flex items-center lg:gap-2 2xl:gap-4">
-						<Link className="py-2 lg:py-4 px-4 lg:px-8 border border-[#DADADA] rounded-xl text-[20px] font-bold">
+						<Link
+							to="/login"
+							className="py-2 lg:py-4 px-4 lg:px-8 border border-[#DADADA] rounded-xl text-[20px] font-bold"
+						>
 							Sign In
 						</Link>
 						<div className="hidden lg:flex items-center">

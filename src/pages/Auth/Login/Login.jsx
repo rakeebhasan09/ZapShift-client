@@ -3,7 +3,7 @@ import Google from "../../Shared/Social/Google";
 
 const Login = () => {
 	return (
-		<div className="max-w-[348px] mx-auto inter">
+		<div className="max-w-[384px] mx-auto inter">
 			<h2 className="text-black text-[28px] md:text-[42px] font-extrabold">
 				Welcome Back
 			</h2>
