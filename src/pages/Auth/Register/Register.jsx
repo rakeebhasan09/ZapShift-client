@@ -1,25 +1,46 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Google from "../../Shared/Social/Google";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
+import axios from "axios";
 
 const Register = () => {
-	const { userRegistration } = useAuth();
+	const { userRegistration, updateUserProfile, setUser } = useAuth();
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
+	const navigate = useNavigate();
 
 	const handleRegistration = (data) => {
-		console.log(data.photo[0]);
-		// userRegistration(data.email, data.password)
-		// 	.then((result) => {
-		// 		console.log(result.user);
-		// 	})
-		// 	.catch((error) => {
-		// 		console.log(error);
-		// 	});
+		const profileImage = data.photo[0];
+
+		userRegistration(data.email, data.password)
+			.then((result) => {
+				const formData = new FormData();
+				formData.append("image", profileImage);
+				const image_API_URL = `https://api.imgbb.com/1/upload?key=${
+					import.meta.env.VITE_imageHost
+				}`;
+				axios.post(image_API_URL, formData).then((res) => {
+					const userProfile = {
+						displayName: data.name,
+						photoURL: res.data.data.url,
+					};
+					updateUserProfile(userProfile)
+						.then(() => {
+							result.user.displayName = data.name;
+							result.user.photoURL = res.data.data.url;
+							setUser(result.user);
+							navigate("/");
+						})
+						.catch((error) => console.log(error));
+				});
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	};
 	return (
 		<div className="max-w-[384px] mx-auto inter">
