@@ -43,10 +43,10 @@ const Navbar = () => {
 			</li>
 			<li>
 				<NavLink
-					to="/pricing"
+					to="/send-parcel"
 					className="font-medium hover:bg-transparent text-[#5B6A2E]"
 				>
-					Pricing
+					Send Parcel
 				</NavLink>
 			</li>
 			<li>
