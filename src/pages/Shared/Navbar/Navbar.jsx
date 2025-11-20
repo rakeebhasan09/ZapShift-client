@@ -51,18 +51,10 @@ const Navbar = () => {
 			</li>
 			<li>
 				<NavLink
-					to="/blog"
+					to="/be-a-rider"
 					className="font-medium hover:bg-transparent text-[#5B6A2E]"
 				>
-					Blog
-				</NavLink>
-			</li>
-			<li>
-				<NavLink
-					to="/contact"
-					className="font-medium hover:bg-transparent text-[#5B6A2E]"
-				>
-					Contact
+					Be a Rider
 				</NavLink>
 			</li>
 		</>
