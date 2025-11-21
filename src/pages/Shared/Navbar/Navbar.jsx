@@ -57,6 +57,18 @@ const Navbar = () => {
 					Be a Rider
 				</NavLink>
 			</li>
+			{user && (
+				<>
+					<li>
+						<NavLink
+							to="/dashboard/my-parcels"
+							className="font-medium hover:bg-transparent text-[#5B6A2E]"
+						>
+							My Parcels
+						</NavLink>
+					</li>
+				</>
+			)}
 		</>
 	);
 	return (

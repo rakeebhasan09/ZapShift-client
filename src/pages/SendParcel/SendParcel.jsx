@@ -2,15 +2,20 @@ import { useForm, useWatch } from "react-hook-form";
 import Container from "../../components/Container/Container";
 import useAuth from "../../hooks/useAuth";
 import { useLoaderData } from "react-router";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const SendParcel = () => {
 	const {
 		register,
 		handleSubmit,
 		control,
-		formState: { errors },
+		reset,
+		// formState: { errors },
 	} = useForm();
 	const { user } = useAuth();
+
+	const axiosSecure = useAxiosSecure();
 
 	const serviceCenters = useLoaderData();
 	const regionsDuplicate = serviceCenters.map((c) => c.region);
@@ -27,7 +32,52 @@ const SendParcel = () => {
 	};
 
 	const handleSendParcel = (data) => {
-		console.log(data);
+		// console.log(data);
+		const isDocument = data.parcelType === "Document";
+		const isDistrict = data.senderRegion === data.receiverRegion;
+		const parcelWeight = parseFloat(data.parcelWeight);
+
+		let cost = 0;
+		if (isDocument) {
+			cost = isDistrict ? 60 : 80;
+		} else {
+			if (parcelWeight < 3) {
+				cost = isDistrict ? 110 : 150;
+			} else {
+				const minCharge = isDistrict ? 110 : 150;
+				const extraWeight = parcelWeight - 3;
+				const extraCharge = isDistrict
+					? extraWeight * 40
+					: extraWeight * 40 + 40;
+
+				cost = minCharge + extraCharge;
+			}
+		}
+
+		data.cost = cost;
+
+		Swal.fire({
+			title: "Agree with the cost?",
+			text: `You will be charged ${cost} taka.`,
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: "I agree",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				axiosSecure.post("/parcels", data).then((res) => {
+					if (res.data.insertedId) {
+						Swal.fire({
+							title: "Parcel Stored!",
+							text: "Your Parcel has been Stored.",
+							icon: "success",
+						});
+						reset();
+					}
+				});
+			}
+		});
 	};
 	return (
 		<section className="mt-4 lg:mt-8 mb-6 md:mb-16 lg:mb-28">
@@ -156,6 +206,19 @@ const SendParcel = () => {
 												</select>
 											</div>
 										</div>
+										{/* Sender Email */}
+										<div>
+											<label className="block text-sm font-medium text-[#0F172A] mb-1.5">
+												Sender Email
+											</label>
+											<input
+												type="text"
+												defaultValue={user?.email}
+												readOnly
+												{...register("senderEmail")}
+												className="w-full border border-[#CBD5E1] rounded-md px-3 py-2 outline-none"
+											/>
+										</div>
 										{/* Input Row */}
 										<div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 											{/* Sender Name */}
@@ -272,6 +335,18 @@ const SendParcel = () => {
 													))}
 												</select>
 											</div>
+										</div>
+										{/* Receiver Email */}
+										<div>
+											<label className="block text-sm font-medium text-[#0F172A] mb-1.5">
+												Receiver Email
+											</label>
+											<input
+												type="text"
+												placeholder="receiver@gmail.com"
+												{...register("receiverEmail")}
+												className="w-full border border-[#CBD5E1] rounded-md px-3 py-2 outline-none"
+											/>
 										</div>
 										{/* Input Row */}
 										<div className="grid grid-cols-1 md:grid-cols-2 gap-5">
