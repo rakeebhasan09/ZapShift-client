@@ -1,7 +1,7 @@
 import { useForm, useWatch } from "react-hook-form";
 import Container from "../../components/Container/Container";
 import useAuth from "../../hooks/useAuth";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
@@ -14,6 +14,8 @@ const SendParcel = () => {
 		// formState: { errors },
 	} = useForm();
 	const { user } = useAuth();
+
+	const navigate = useNavigate();
 
 	const axiosSecure = useAxiosSecure();
 
@@ -68,10 +70,12 @@ const SendParcel = () => {
 			if (result.isConfirmed) {
 				axiosSecure.post("/parcels", data).then((res) => {
 					if (res.data.insertedId) {
+						navigate("/dashboard/my-parcels");
 						Swal.fire({
 							title: "Parcel Stored!",
 							text: "Your Parcel has been Stored.",
 							icon: "success",
+							timer: 2500,
 						});
 						reset();
 					}
