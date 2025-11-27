@@ -26,7 +26,6 @@ const useAxiosSecure = () => {
 				return response;
 			},
 			(error) => {
-				console.log(error);
 				const statusCode = error.status;
 				if (statusCode === 401 || statusCode === 403) {
 					logOut().then(() => {
@@ -41,7 +40,7 @@ const useAxiosSecure = () => {
 			axiosSecure.interceptors.request.eject(reqInterceptor);
 			axiosSecure.interceptors.response.eject(resInterceptor);
 		};
-	}, [user]);
+	}, [user, logOut, navigate]);
 
 	return axiosSecure;
 };

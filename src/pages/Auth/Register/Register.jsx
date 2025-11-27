@@ -3,6 +3,7 @@ import Google from "../../Shared/Social/Google";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
 import axios from "axios";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Register = () => {
 	const { userRegistration, updateUserProfile, setUser } = useAuth();
@@ -12,6 +13,7 @@ const Register = () => {
 		formState: { errors },
 	} = useForm();
 	const navigate = useNavigate();
+	const axiosSecure = useAxiosSecure();
 
 	const handleRegistration = (data) => {
 		const profileImage = data.photo[0];
@@ -24,10 +26,25 @@ const Register = () => {
 					import.meta.env.VITE_imageHost
 				}`;
 				axios.post(image_API_URL, formData).then((res) => {
+					const photoURL = res.data.data.url;
 					const userProfile = {
 						displayName: data.name,
-						photoURL: res.data.data.url,
+						photoURL: photoURL,
 					};
+
+					// Create User In MongoDB
+					const userInfo = {
+						email: data.email,
+						displayName: data.name,
+						photoURL: photoURL,
+					};
+					axiosSecure.post("/users", userInfo).then((res) => {
+						if (res.data.insertedId) {
+							console.log("user saved in the mongodb");
+						}
+					});
+
+					// Update on firebase
 					updateUserProfile(userProfile)
 						.then(() => {
 							result.user.displayName = data.name;

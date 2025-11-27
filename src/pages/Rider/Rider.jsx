@@ -1,7 +1,54 @@
 import Container from "../../components/Container/Container";
 import riderImage from "../../assets/rider-image.png";
+import { useForm, useWatch } from "react-hook-form";
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useLoaderData } from "react-router";
+import Swal from "sweetalert2";
 
 const Rider = () => {
+	const {
+		register,
+		handleSubmit,
+		control,
+		// reset,
+		// formState: { errors },
+	} = useForm();
+	const { user } = useAuth();
+	const axiosSecure = useAxiosSecure();
+
+	const serviceCenters = useLoaderData();
+	const regionsDuplicate = serviceCenters.map((c) => c.region);
+	const regions = [...new Set(regionsDuplicate)];
+	const senderHouse = useWatch({ control, name: "senderWireHouse" });
+
+	const districtByRegion = (region) => {
+		const regionDistricts = serviceCenters.filter(
+			(c) => c.region === region
+		);
+		const districts = regionDistricts.map((d) => d.district);
+		return districts;
+	};
+
+	const handleBeARider = (data) => {
+		console.log(data);
+		axiosSecure
+			.post("/riders", data)
+			.then((res) => {
+				if (res.data.insertedId) {
+					Swal.fire({
+						position: "center",
+						icon: "success",
+						title: "Thanks for your requiest.",
+						showConfirmButton: false,
+						timer: 1500,
+					});
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
 	return (
 		<section className="mt-4 md:mt-8 mb-10 md:mb-20">
 			<div className="container">
@@ -25,7 +72,10 @@ const Rider = () => {
 									Tell us about yourself
 								</h3>
 								{/* Form */}
-								<form className="inter flex flex-col gap-5">
+								<form
+									onSubmit={handleSubmit(handleBeARider)}
+									className="inter flex flex-col gap-5"
+								>
 									{/* Input Row */}
 									<div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 										{/* Name */}
@@ -35,7 +85,9 @@ const Rider = () => {
 											</label>
 											<input
 												type="text"
-												placeholder="Your Name"
+												defaultValue={user.displayName}
+												readOnly
+												{...register("name")}
 												className="py-2 px-3 border border-[#CBD5E1] outline-none rounded-md w-full"
 											/>
 										</div>
@@ -46,6 +98,7 @@ const Rider = () => {
 											</label>
 											<input
 												type="text"
+												{...register("age")}
 												placeholder="Your Age"
 												className="py-2 px-3 border border-[#CBD5E1] outline-none rounded-md w-full"
 											/>
@@ -60,25 +113,30 @@ const Rider = () => {
 											</label>
 											<input
 												type="text"
-												placeholder="Your Name"
+												{...register("email")}
+												defaultValue={user.email}
+												readOnly
 												className="py-2 px-3 border border-[#CBD5E1] outline-none rounded-md w-full"
 											/>
 										</div>
 										{/* Your Region */}
 										<div>
 											<label className="text-[#0F172A] text-[14px] font-medium block mb-1.5">
-												Your Region
+												Region
 											</label>
 											<select
-												defaultValue="Select your region"
+												defaultValue="Select Region"
+												{...register("senderWireHouse")}
 												className="select ring-0 outline-0 border border-[#CBD5E1] w-full"
 											>
 												<option disabled={true}>
-													Select your region
+													Select Region
 												</option>
-												<option>Crimson</option>
-												<option>Amber</option>
-												<option>Velvet</option>
+												{regions.map((r) => (
+													<option key={r} value={r}>
+														{r}
+													</option>
+												))}
 											</select>
 										</div>
 									</div>
@@ -92,7 +150,8 @@ const Rider = () => {
 											</label>
 											<input
 												type="text"
-												placeholder="Your Name"
+												{...register("nid")}
+												placeholder="NID No"
 												className="py-2 px-3 border border-[#CBD5E1] outline-none rounded-md w-full"
 											/>
 										</div>
@@ -103,6 +162,7 @@ const Rider = () => {
 											</label>
 											<input
 												type="text"
+												{...register("mobile")}
 												placeholder="Your Age"
 												className="py-2 px-3 border border-[#CBD5E1] outline-none rounded-md w-full"
 											/>
@@ -112,18 +172,23 @@ const Rider = () => {
 									{/* want to work */}
 									<div>
 										<label className="text-[#0F172A] text-[14px] font-medium block mb-1.5">
-											Which wire-house you want to work?
+											District
 										</label>
 										<select
-											defaultValue="Select wire-house"
+											defaultValue="Select District"
+											{...register("senderRegion")}
 											className="select ring-0 outline-0 border border-[#CBD5E1] w-full"
 										>
 											<option disabled={true}>
-												Select wire-house
+												Select District
 											</option>
-											<option>Crimson</option>
-											<option>Amber</option>
-											<option>Velvet</option>
+											{districtByRegion(senderHouse).map(
+												(d) => (
+													<option key={d} value={d}>
+														{d}
+													</option>
+												)
+											)}
 										</select>
 									</div>
 

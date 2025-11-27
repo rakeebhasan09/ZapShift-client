@@ -1,3 +1,6 @@
+import { MdOutlinePayment } from "react-icons/md";
+import { PiMotorcycleFill } from "react-icons/pi";
+import { RiAlignItemBottomLine } from "react-icons/ri";
 import { Link, NavLink, Outlet } from "react-router";
 
 const DashboardLayout = () => {
@@ -82,19 +85,8 @@ const DashboardLayout = () => {
 									className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
 								>
 									{/* Home icon */}
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										viewBox="0 0 24 24"
-										strokeLinejoin="round"
-										strokeLinecap="round"
-										strokeWidth="2"
-										fill="none"
-										stroke="currentColor"
-										className="my-1.5 inline-block size-4"
-									>
-										<path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
-										<path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-									</svg>
+									<RiAlignItemBottomLine />
+
 									<span className="is-drawer-close:hidden">
 										My Parcels
 									</span>
@@ -109,21 +101,26 @@ const DashboardLayout = () => {
 									className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
 								>
 									{/* Home icon */}
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										viewBox="0 0 24 24"
-										strokeLinejoin="round"
-										strokeLinecap="round"
-										strokeWidth="2"
-										fill="none"
-										stroke="currentColor"
-										className="my-1.5 inline-block size-4"
-									>
-										<path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
-										<path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-									</svg>
+									<MdOutlinePayment />
+
 									<span className="is-drawer-close:hidden">
 										Payment History
+									</span>
+								</NavLink>
+							</li>
+
+							{/* Approve Riders */}
+							<li>
+								<NavLink
+									to="/dashboard/approve-riders"
+									data-tip="Approve Riders"
+									className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+								>
+									{/* Home icon */}
+									<PiMotorcycleFill />
+
+									<span className="is-drawer-close:hidden">
+										Approve Riders
 									</span>
 								</NavLink>
 							</li>

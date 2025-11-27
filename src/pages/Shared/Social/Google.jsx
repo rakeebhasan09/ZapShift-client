@@ -1,14 +1,26 @@
 import { useLocation, useNavigate } from "react-router";
 import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Google = () => {
 	const { googleLogin } = useAuth();
 	const location = useLocation();
 	const navigate = useNavigate();
+	const axiosSecure = useAxiosSecure();
+
 	const handleGoogleLogin = () => {
 		googleLogin()
-			.then(() => {
-				navigate(location?.state || "/");
+			.then((result) => {
+				// Create User In MongoDB
+				const userInfo = {
+					email: result.user.email,
+					displayName: result.user.displayName,
+					photoURL: result.user.photoURL,
+				};
+				axiosSecure.post("/users", userInfo).then((res) => {
+					console.log("user data has been stored", res.data);
+					navigate(location?.state || "/");
+				});
 			})
 			.then((error) => {
 				console.log(error);
