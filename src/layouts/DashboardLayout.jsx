@@ -1,3 +1,5 @@
+import { FaUsers } from "react-icons/fa";
+import { IoMdSettings } from "react-icons/io";
 import { MdOutlinePayment } from "react-icons/md";
 import { PiMotorcycleFill } from "react-icons/pi";
 import { RiAlignItemBottomLine } from "react-icons/ri";
@@ -86,7 +88,6 @@ const DashboardLayout = () => {
 								>
 									{/* Home icon */}
 									<RiAlignItemBottomLine />
-
 									<span className="is-drawer-close:hidden">
 										My Parcels
 									</span>
@@ -102,7 +103,6 @@ const DashboardLayout = () => {
 								>
 									{/* Home icon */}
 									<MdOutlinePayment />
-
 									<span className="is-drawer-close:hidden">
 										Payment History
 									</span>
@@ -118,35 +118,33 @@ const DashboardLayout = () => {
 								>
 									{/* Home icon */}
 									<PiMotorcycleFill />
-
 									<span className="is-drawer-close:hidden">
 										Approve Riders
 									</span>
 								</NavLink>
 							</li>
+							{/* Manage Users */}
+							<li>
+								<NavLink
+									to="/dashboard/users-management"
+									data-tip="Users Management"
+									className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+								>
+									<FaUsers />
+									<span className="is-drawer-close:hidden">
+										Users Management
+									</span>
+								</NavLink>
+							</li>
 
-							{/* List item */}
+							{/* Settings icon */}
 							<li>
 								<button
 									className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
 									data-tip="Settings"
 								>
 									{/* Settings icon */}
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										viewBox="0 0 24 24"
-										strokeLinejoin="round"
-										strokeLinecap="round"
-										strokeWidth="2"
-										fill="none"
-										stroke="currentColor"
-										className="my-1.5 inline-block size-4"
-									>
-										<path d="M20 7h-9"></path>
-										<path d="M14 17H5"></path>
-										<circle cx="17" cy="17" r="3"></circle>
-										<circle cx="7" cy="7" r="3"></circle>
-									</svg>
+									<IoMdSettings />
 									<span className="is-drawer-close:hidden">
 										Settings
 									</span>
