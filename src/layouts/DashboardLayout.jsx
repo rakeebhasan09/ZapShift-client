@@ -4,8 +4,10 @@ import { MdOutlinePayment } from "react-icons/md";
 import { PiMotorcycleFill } from "react-icons/pi";
 import { RiAlignItemBottomLine } from "react-icons/ri";
 import { Link, NavLink, Outlet } from "react-router";
+import useRole from "../hooks/useRole";
 
 const DashboardLayout = () => {
+	const { role } = useRole();
 	return (
 		<section className="bg-white">
 			<div className="drawer lg:drawer-open">
@@ -109,33 +111,37 @@ const DashboardLayout = () => {
 								</NavLink>
 							</li>
 
-							{/* Approve Riders */}
-							<li>
-								<NavLink
-									to="/dashboard/approve-riders"
-									data-tip="Approve Riders"
-									className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-								>
-									{/* Home icon */}
-									<PiMotorcycleFill />
-									<span className="is-drawer-close:hidden">
-										Approve Riders
-									</span>
-								</NavLink>
-							</li>
-							{/* Manage Users */}
-							<li>
-								<NavLink
-									to="/dashboard/users-management"
-									data-tip="Users Management"
-									className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-								>
-									<FaUsers />
-									<span className="is-drawer-close:hidden">
-										Users Management
-									</span>
-								</NavLink>
-							</li>
+							{role === "admin" && (
+								<>
+									{/* Approve Riders */}
+									<li>
+										<NavLink
+											to="/dashboard/approve-riders"
+											data-tip="Approve Riders"
+											className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+										>
+											{/* Home icon */}
+											<PiMotorcycleFill />
+											<span className="is-drawer-close:hidden">
+												Approve Riders
+											</span>
+										</NavLink>
+									</li>
+									{/* Manage Users */}
+									<li>
+										<NavLink
+											to="/dashboard/users-management"
+											data-tip="Users Management"
+											className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+										>
+											<FaUsers />
+											<span className="is-drawer-close:hidden">
+												Users Management
+											</span>
+										</NavLink>
+									</li>
+								</>
+							)}
 
 							{/* Settings icon */}
 							<li>

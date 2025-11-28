@@ -1,16 +1,65 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { FaUserShield } from "react-icons/fa";
+import { FiShieldOff } from "react-icons/fi";
+import Swal from "sweetalert2";
 
 const UsersManagement = () => {
 	const axiosSecure = useAxiosSecure();
-	const { data: users = [] } = useQuery({
+	// Data Fetching
+	const { refetch, data: users = [] } = useQuery({
 		queryKey: ["users"],
 		queryFn: async () => {
 			const res = await axiosSecure.get(`/users`);
 			return res.data;
 		},
 	});
+
+	// Handle User to Admin
+	const handleUpdateUserRole = (user) => {
+		const updateInfo = { role: "admin" };
+		axiosSecure
+			.patch(`/users/${user._id}`, updateInfo)
+			.then((res) => {
+				if (res.data.modifiedCount) {
+					refetch();
+					Swal.fire({
+						position: "center",
+						icon: "success",
+						title: `${user.displayName} marked as admin.`,
+						showConfirmButton: false,
+						timer: 1500,
+					});
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+
+	// Handle Admin to User
+	const handleAdminToUser = (user) => {
+		const updateInfo = { role: "user" };
+		axiosSecure
+			.patch(`/users/${user._id}`, updateInfo)
+			.then((res) => {
+				if (res.data.modifiedCount) {
+					refetch();
+					Swal.fire({
+						position: "center",
+						icon: "success",
+						title: `${user.displayName} marked as user.`,
+						showConfirmButton: false,
+						timer: 1500,
+					});
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+
 	return (
 		<section className="p-5 md:p-10">
 			Total users {users.length}
@@ -22,8 +71,9 @@ const UsersManagement = () => {
 							<th>SL No.</th>
 							<th>Name</th>
 							<th>Email</th>
-							<th>Favorite Color</th>
-							<th></th>
+							<th>Role</th>
+							<th>Admin Action</th>
+							<th>Other Action</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -51,11 +101,27 @@ const UsersManagement = () => {
 									</div>
 								</td>
 								<td>{user.email}</td>
-								<td>Purple</td>
+								<td>{user.role}</td>
 								<th>
-									<button className="btn btn-ghost btn-xs">
-										details
-									</button>
+									{user.role === "admin" ? (
+										<button
+											onClick={() =>
+												handleAdminToUser(user)
+											}
+											className="btn"
+										>
+											<FiShieldOff />
+										</button>
+									) : (
+										<button
+											onClick={() =>
+												handleUpdateUserRole(user)
+											}
+											className="btn ml-2.5"
+										>
+											<FaUserShield />
+										</button>
+									)}
 								</th>
 							</tr>
 						))}
