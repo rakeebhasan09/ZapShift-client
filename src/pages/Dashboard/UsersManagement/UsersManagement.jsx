@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { FaUserShield } from "react-icons/fa";
 import { FiShieldOff } from "react-icons/fi";
@@ -7,11 +7,15 @@ import Swal from "sweetalert2";
 
 const UsersManagement = () => {
 	const axiosSecure = useAxiosSecure();
+	const [searchText, setSearchText] = useState("");
+
 	// Data Fetching
 	const { refetch, data: users = [] } = useQuery({
-		queryKey: ["users"],
+		queryKey: ["users", searchText],
 		queryFn: async () => {
-			const res = await axiosSecure.get(`/users`);
+			const res = await axiosSecure.get(
+				`/users?searchText=${searchText}`
+			);
 			return res.data;
 		},
 	});
@@ -20,7 +24,7 @@ const UsersManagement = () => {
 	const handleUpdateUserRole = (user) => {
 		const updateInfo = { role: "admin" };
 		axiosSecure
-			.patch(`/users/${user._id}`, updateInfo)
+			.patch(`/users/${user._id}/role`, updateInfo)
 			.then((res) => {
 				if (res.data.modifiedCount) {
 					refetch();
@@ -42,7 +46,7 @@ const UsersManagement = () => {
 	const handleAdminToUser = (user) => {
 		const updateInfo = { role: "user" };
 		axiosSecure
-			.patch(`/users/${user._id}`, updateInfo)
+			.patch(`/users/${user._id}/role`, updateInfo)
 			.then((res) => {
 				if (res.data.modifiedCount) {
 					refetch();
@@ -63,6 +67,34 @@ const UsersManagement = () => {
 	return (
 		<section className="p-5 md:p-10">
 			Total users {users.length}
+			<p>Search Text {searchText}</p>
+			{/* Seacrh Input Field */}
+			<div>
+				<label className="input outline-none ring-0">
+					<svg
+						className="h-[1em] opacity-50"
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 24 24"
+					>
+						<g
+							strokeLinejoin="round"
+							strokeLinecap="round"
+							strokeWidth="2.5"
+							fill="none"
+							stroke="currentColor"
+						>
+							<circle cx="11" cy="11" r="8"></circle>
+							<path d="m21 21-4.3-4.3"></path>
+						</g>
+					</svg>
+					<input
+						type="search"
+						className="grow "
+						placeholder="Search User"
+						onChange={(e) => setSearchText(e.target.value)}
+					/>
+				</label>
+			</div>
 			<div className="overflow-x-auto">
 				<table className="table">
 					{/* head */}
