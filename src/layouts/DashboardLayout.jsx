@@ -2,7 +2,7 @@ import { FaUsers } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
 import { MdOutlinePayment } from "react-icons/md";
 import { PiMotorcycleFill } from "react-icons/pi";
-import { RiAlignItemBottomLine } from "react-icons/ri";
+import { RiAlignItemBottomLine, RiEBikeFill } from "react-icons/ri";
 import { Link, NavLink, Outlet } from "react-router";
 import useRole from "../hooks/useRole";
 
@@ -124,6 +124,20 @@ const DashboardLayout = () => {
 											<PiMotorcycleFill />
 											<span className="is-drawer-close:hidden">
 												Approve Riders
+											</span>
+										</NavLink>
+									</li>
+									{/* Assign Riders */}
+									<li>
+										<NavLink
+											to="/dashboard/assign-riders"
+											data-tip="Assign Riders"
+											className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+										>
+											{/* Home icon */}
+											<RiEBikeFill />
+											<span className="is-drawer-close:hidden">
+												Assign Riders
 											</span>
 										</NavLink>
 									</li>
