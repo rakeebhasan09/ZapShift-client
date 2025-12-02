@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useRef, useState } from "react";
+import Swal from "sweetalert2";
 
 const AssignRiders = () => {
 	const [selectedParcel, setSelectedParcel] = useState(null);
@@ -9,7 +10,7 @@ const AssignRiders = () => {
 
 	const riderModalRef = useRef();
 
-	const { data: parcels = [] } = useQuery({
+	const { refetch: parcelsRefetch, data: parcels = [] } = useQuery({
 		queryKey: ["parcels", "pending-pickup"],
 		queryFn: async () => {
 			const res = await axiosSecure.get(
@@ -24,7 +25,7 @@ const AssignRiders = () => {
 		enabled: !!selectedParcel,
 		queryFn: async () => {
 			const res = await axiosSecure.get(
-				`/riders?status=approved&senderRegion=${selectedParcel.senderRegion}&workStatus=available`
+				`/riders?status=approved&senderRegion=${selectedParcel?.senderRegion}&workStatus=available`
 			);
 			return res.data;
 		},
@@ -44,7 +45,19 @@ const AssignRiders = () => {
 			riderName: rider.name,
 			parcelId: selectedParcel._id,
 		};
-		axiosSecure.patch(``, riderAssignInfo);
+		axiosSecure
+			.patch(`/parcels/${selectedParcel._id}`, riderAssignInfo)
+			.then((res) => {
+				if (res.data.modifiedCount) {
+					riderModalRef.current.close();
+					parcelsRefetch();
+					Swal.fire({
+						title: "Assigned!",
+						text: "Rider Assigned.",
+						icon: "success",
+					});
+				}
+			});
 	};
 	return (
 		<section className="p-5 md:p-10">
@@ -78,7 +91,7 @@ const AssignRiders = () => {
 											}
 											className="btn btn-primary text-base text-secondary"
 										>
-											Assing Rider
+											Find Riders
 										</button>
 									</td>
 								</tr>

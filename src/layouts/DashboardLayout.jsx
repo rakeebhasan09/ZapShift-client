@@ -1,4 +1,4 @@
-import { FaUsers } from "react-icons/fa";
+import { FaTasks, FaUsers } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
 import { MdOutlinePayment } from "react-icons/md";
 import { PiMotorcycleFill } from "react-icons/pi";
@@ -111,6 +111,27 @@ const DashboardLayout = () => {
 								</NavLink>
 							</li>
 
+							{/* Only Riders Can Access Those Routes */}
+							{role === "rider" && (
+								<>
+									{/* Approve Riders */}
+									<li>
+										<NavLink
+											to="/dashboard/assigned-deliveries"
+											data-tip="Assigned Deliveries"
+											className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+										>
+											{/* Home icon */}
+											<FaTasks />
+											<span className="is-drawer-close:hidden">
+												Assigned Deliveries
+											</span>
+										</NavLink>
+									</li>
+								</>
+							)}
+
+							{/* Only Admin Can Access Those Routes */}
 							{role === "admin" && (
 								<>
 									{/* Approve Riders */}
